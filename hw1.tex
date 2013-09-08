@@ -1,0 +1,87 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,algpseudocode}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Homework 1}%replace X with the appropriate number
+\author{Jeremy Wright\\ %replace with your name
+CSE598 - Analysis of Algorithms} %if necessary, replace with your course title
+ 
+\maketitle
+ 
+\begin{problem}{4.13} 
+In order to maximize the customer satisfaction a new metric must be used which
+combines the run time ($t$) with the customer weight ($w$).
+\begin{equation}
+\end{equation}
+The place each $job_i$ in a minimum priority queue with their respective priority
+$z_i$.
+\begin{algorithmic}
+    \Require{$z_i = t_i \cdot w_i$}
+    \Require{Place z in a min priority queue zs}
+    \ForAll{job in zs}
+        \State $Schedule \gets job$
+    \EndFor
+\end{algorithmic}
+
+By combining the weight and time into a new metric, jobs which are short, but
+have a high customer weight will be scheduled before jobs which are longer but
+have a lesser customer weight.
+\end{problem}
+ 
+\begin{problem}{4.16}
+    This problem is similar to the interval scheduling problem except that the
+    transaction n must be placed into a room or ``interval''. We must try to put
+    as many transactions into as many intervals as possible.
+    \begin{algorithmic}
+        \Require $xs$ be the list of times bounding a window, $x_L$ for the Low time, and
+        $x_H$ for the high time. 
+        \Require $ns$ be the list of transactions 
+        \ForAll{n in ns}
+            \ForAll{x in xs}
+            \If {$x_L < n < x_H$}
+                    \State $n \gets x$ \Comment{transaction n is marked to occur
+                    at time x}
+                \EndIf
+            \EndFor
+        \EndFor
+\end{algorithmic}
+Let $n\in \Z$.  Then yada yada.
+\end{problem}
+ 
+\begin{proof}
+Blah, blah, blah.  I'm so smart.
+\end{proof}
+ 
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+ 
+\end{document}
