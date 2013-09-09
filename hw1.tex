@@ -6,7 +6,7 @@
 \documentclass[12pt]{article}
  
 \usepackage[margin=1in]{geometry} 
-\usepackage{amsmath,amsthm,amssymb,algpseudocode}
+\usepackage{amsmath,amsthm,amssymb,algpseudocode,listings}
  
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
@@ -35,7 +35,64 @@
 CSE598 - Analysis of Algorithms} %if necessary, replace with your course title
  
 \maketitle
- 
+\begin{problem}{1.4}
+    One must iterate through all the students. Since there are more students
+    than hospitals, every hospital must be offered every student in order to
+    prevents types of instability.
+
+    \begin{proof}
+        Consider:\\
+        \begin{algorithmic}
+            \ForAll{h in hs}
+            \State $h \gets top-student$
+            \EndFor
+        \end{algorithmic}
+        In this case there is at least a student that wasn't offered to
+        a hospital, thus one must iterate over the students.
+    \end{proof}
+    \lstset{language=Python}
+    \begin{lstlisting}
+assignments = []
+while(a student is unassigned \& not offered by all hospitals):
+    Choose Student s
+    Let h be the highest ranking hospital in s preference list to whom h has not offered
+    if(h.has_available_slot()):
+        assignments.append(s.assign(h))
+    else:
+        s` = h.assigned()
+        if(h.prefers(s`)):
+            pass #S remains unassigned
+        else:
+            assignments.append(s.assign(h))
+            assignments.remove(s`) #s` becomes free
+#assignments now describes the pair of assigned hospitals and students
+    \end{lstlisting}
+
+    Hospitals are offered every student, and will only trade p thus, the first
+    type of instability cannot occur since the only way a student s' could be
+    unemployed is if he was assigned to a hospital and a hospital fired him in
+    favor of a better candidate
+
+    The second type of instability can only occur where s' prefers a hospital h,
+    and h prefers s'. If h is never offered s'  since if it was offered and
+    h preferred it, s' would be assigned h. Since a hospital sees every student this is a contradiction
+\end{problem}
+\begin{problem}{4.3}
+    To show that we are minimizing the number of trucks without sending boxes
+    out or order, we will show that filling each truck to full allows the
+    shipping to stay ahead of the box stream. 
+
+    We want to minimize the time spend in the loading depot, so we can maximize
+    the number of trucks actually delivering product. Thus we define the loading
+    time $L_t$. We want to assure that each successive loading time is less that
+    the previous time. Thus $L_t_j \geq L_t_i$.  By filling each truck to
+    maximum we assure each successive truck will have the same or equal number
+    of boxes. Thus we stay ahead of the box stream. 
+    
+    If we allowed boxes to arrive out of order, we could optimize this by
+    filling the volume of the truck more efficiently. This would further
+    maximize each loading time, and allow one to send fewer truck.
+\end{problem}
 \begin{problem}{4.13} 
 In order to maximize the customer satisfaction a new metric must be used which
 combines the run time ($t$) with the customer weight ($w$).
