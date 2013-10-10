@@ -1,0 +1,164 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,algpseudocode,listings}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Homework 3}%replace X with the appropriate number
+\author{Jeremy Wright\\ %replace with your name
+CSE598 - Analysis of Algorithms} %if necessary, replace with your course title
+ 
+\maketitle
+\begin{problem}{1}
+    The following table demonstrates the cost over time:
+\\
+    \begin{tabular}{|c | c | c | c |}\hline
+        Power & Step & Cost & Time-Value\\ \hline
+        $0$   & 0    & 1    & $1 + lg(0) = 1$ \\ \hline
+        $2^0$ & 1    & 1    & $1 + lg(0) = 1$ \\ \hline
+        $2^1$ & 2    & 2    & $1 + lg(0) = 2$ \\ \hline
+            & 3    & 1    & $1 + lg(0) = 2.58 bank has 3.58$ \\ \hline
+        $2^2$ & 4    & 4    & $ bank has .58$ \\ \hline
+            & 5    & 1    & $ bank has 2.32 + 0.58 = 2.91$ \\ \hline
+            & 6    & 1    &  \\ \hline
+            & 7    & 1    &  \\ \hline
+        $2^3$ & 8    & 8    &  \\ \hline
+            & 9    & 1    &  \\ \hline
+            & 10   & 1    &  \\ \hline
+            & 11   & 1    &  \\ \hline
+            & 12   & 1    &  \\ \hline
+            & 13   & 1    &  \\ \hline
+            & 14   & 1    &  \\ \hline
+            & 15   & 1    &  \\ \hline
+        $2^4$ & 16   & 16    & $1 + lg(0) = 1$ \\ \hline
+    \end{tabular}
+
+    Equations then follow:
+    \begin{equation}
+        \displaystyle\sum\limits_{n=2^2+1}^{2^3} lg(n) = 28.98
+    \end{equation}
+    \begin{equation}
+       \label{eq:twofour}
+        \displaystyle\sum\limits_{n=2^4+1}^{2^5} lg(n) = 73.41
+    \end{equation}
+    After \ref{eq:twofour}, the bank has 32 left over. Thus lg is too much, can we
+    do constant?
+    \begin{equation}
+       \label{eq:const_3}
+        \displaystyle\sum\limits_{n=2^3+1}^{2^4} 2 = 16
+    \end{equation}
+    \begin{equation}
+       \label{eq:const_4}
+        \displaystyle\sum\limits_{n=2^4+1}^{2^5} 2 = 32
+    \end{equation}
+    Equation \ref{eq:const_3} covers the previous costs, and \ref{eq:const_4} breaks
+even between $2^4$ and $2^5$ $\therefore$ this algorithm performs constant time
+amortized $O(3)$ 1 for the actual operation, 2 for the bank.
+\end{problem}
+\begin{problem}{2}
+
+\end{problem}
+\begin{problem}{3}
+    Base case: if the tree has 1 element:
+    \begin{equation}
+        size(x) = 1 \rightarrow 2^{rank(x)} = 2^0 = 1
+    \end{equation}
+
+    Inductive Case:
+    Path Compression assures that the unions assumes that the rooted rank will be
+    greater than the rank will be greater than the rank of the appended subtree.
+    Therefore the root of a set will be strictly greater than it's subtrees
+    after the union operation.
+
+    When union runs there are 2 cases for the two separate sets. $set_1$ rank
+    = $set_2$ rank.
+
+    Size after the union 
+    \begin{equation}
+        size_2'.size = size(s2) + size(s1)
+    \end{equation}
+    Size after the ranks are equal the root set is chosen arbitrarily.
+    \begin{equation}
+        s_2'.size = s_2.rank + 1
+    \end{equation}
+    \begin{equation}
+        s_2'.size \ge 2^{S_1.rank} + 2^{S_2.rank}
+    \end{equation}
+\end{problem}
+
+\begin{problem}{4} 
+a)\\
+\begin{itemize}
+    \item Run Depth first search to the bottom of the tree.
+    \item Then union all recursive sets together.
+    \item once all ancestors have been visited - it colors the nodes black.
+    \item once the deepest ancestor of u \& v then will be black $\rightarrow$
+        print line 10.
+\end{itemize}
+
+b)\\
+The recursive call creates separate make sets on entering the recursive call.
+These sets are not unioned until the recursion reaches the bottom. Only then
+do the sets begin to union. This at each recurse the depth of recursion matches
+the number of sets matches the depth of the node in T
+
+c)\\
+Assume that LXCE does not print the least common ancestor. LXCE starts at a node
+and performs depth first search to the deepest leaf. This leaf is then colored
+black. LXCE then iterates over the companion node of the \{u,v\} pair and prints
+out the colored black node. If LCA does not find the LCA, then the depth first
+search does not find the deepest node $\rightarrow$ a contradiction.
+
+d)\\
+\begin{itemize}
+    \item makeset $O(1)$.
+    \item find(v) w\ path compression $\rightarrow lg* n$
+    \item for each child in T do
+        \begin{itemize}
+            \item LCA(v)
+            \item Union $\rightarrow u \cdot lg* n$
+        \end{itemize}
+\end{itemize}
+    Run time is dominated by running Find on each node u, hence $O(u \cdot lg*
+    v)$
+
+
+
+\end{problem}
+\begin{problem}{5}
+    $Join(T_1, T_2)$ if every element in $T_1$ is less that $T_2$, then the join
+    of $T_1$ to $T_2$ is simply the right rotation of $T_2$ with $T_1$ tacked to
+    the left of $T_2$'s root.
+
+    $Find(a)$ remembering if a is the right or left child of it's parent.
+    Extract a's subtree as a new tree and rotate right if a was a right-child,
+    and rotate left if a was a left-child. 
+\end{problem}
+ 
+\end{document}
