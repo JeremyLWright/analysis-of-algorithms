@@ -1,0 +1,16 @@
+digraph {
+    {
+    rank=same
+    node [shape=circle]
+    A B C D E F
+    }
+    ordering=out
+    x [style=invis]
+    x -> {A B C D E F} [style=invis]
+    A -> B [color=red]
+    B -> F [color=red]
+    A -> C [color=blue]
+    C -> D [color=blue]
+    D -> E [color=blue]
+    E -> F [color=blue]
+}
