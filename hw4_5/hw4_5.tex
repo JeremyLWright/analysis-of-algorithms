@@ -1,0 +1,189 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,algpseudocode,listings}
+\usepackage{color}
+\usepackage{DejaVuSansMono} 
+\usepackage{setspace}
+\usepackage{parskip}
+
+
+\definecolor{Code}{rgb}{0,0,0}
+\definecolor{Decorators}{rgb}{0.5,0.5,0.5}
+\definecolor{Numbers}{rgb}{0.5,0,0}
+\definecolor{MatchingBrackets}{rgb}{0.25,0.5,0.5}
+\definecolor{Keywords}{rgb}{0,0,1}
+\definecolor{self}{rgb}{0,0,0}
+\definecolor{Strings}{rgb}{0,0.63,0}
+\definecolor{Comments}{rgb}{0,0.63,1}
+\definecolor{Backquotes}{rgb}{0,0,0}
+\definecolor{Classname}{rgb}{0,0,0}
+\definecolor{FunctionName}{rgb}{0,0,0}
+\definecolor{Operators}{rgb}{0,0,0}
+\definecolor{Background}{rgb}{0.98,0.98,0.98}
+
+\lstnewenvironment{python}[1][]{
+\lstset{
+numbers=left,
+numberstyle=\ttfamily,
+numbersep=1em,
+xleftmargin=1em,
+framextopmargin=2em,
+framexbottommargin=2em,
+showspaces=false,
+showtabs=false,
+showstringspaces=false,
+frame=l,
+tabsize=4,
+% Basic
+basicstyle=\ttfamily\small\setstretch{1},
+backgroundcolor=\color{Background},
+language=Python,
+% Comments
+commentstyle=\color{Comments}\slshape,
+% Strings
+stringstyle=\color{Strings},
+morecomment=[s][\color{Strings}]{"""}{"""},
+morecomment=[s][\color{Strings}]{'''}{'''},
+% keywords
+morekeywords={import,from,class,def,for,while,if,is,in,elif,else,not,and,or,print,break,continue,return,True,False,None,access,as,,del,except,exec,finally,global,import,lambda,pass,print,raise,try,assert},
+keywordstyle={\color{Keywords}\bfseries},
+% additional keywords
+morekeywords={[2]@invariant},
+keywordstyle={[2]\color{Decorators}\slshape},
+emph={self},
+emphstyle={\color{self}\slshape},
+%
+}}{}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+\lstset{framextopmargin=50pt,frame=bottomline}
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Homework 4 \& 5}%replace X with the appropriate number
+\author{Jeremy Wright\\ %replace with your name
+CSE598 - Analysis of Algorithms} %if necessary, replace with your course title
+ 
+\maketitle
+\begin{problem}{1}
+    Show how to multiple the complex numbers $a+bj$ and$c+dj$ using only three
+    real multiplications\dots
+
+    Given: 
+        \begin{align*}
+        R+jI &= (a+jb)\cdot(c+jd) \\
+        &= (ac - bd) + j(bc + ad)
+    \end{align*}
+
+    A common pattern in Digital Signal Processing is to break out the operations
+    into 3 constants.
+    \begin{align*}
+        \label{eq:components}
+        k_1 &= a(c + d) &= ac + ad \\
+        k_2 &= d(a + b) &= ad + bd \\
+        k_3 &= c(b - a) &= bc - ac \\
+    \end{align*}
+    From these we can define the Real part as
+    \begin{align*}
+        \Re &= k_1 - k_2 \\
+            &= ac + ad - (ad + bd) \\
+            &= ac + ad - ad - bd \\
+            &= ac - bd \\
+    \end{align*}
+    The Imaginary Part as
+    \begin{align*}
+        \Im &= k_1 + k_3            \\
+            &= ac + ad + bc - ac    \\
+            &= ab + bc
+    \end{align*}
+
+    In Python we can clearly see this uses only 3 multiplications.
+    \begin{python}
+        def complex_mul(a, b, c, d):
+            k1 = a(c + d)
+            k2 = d(a + b)
+            k3 = c(b - a)
+            return (k1 - k2) + (k1 - k3)*j
+    \end{python}
+\end{problem}
+
+\begin{problem}{2}
+Consider in the closest pair of points problem, splitting the points along
+$ \frac{n}{4}$ and $\frac{3n}{4}$. Is the complexity still $O(n lg n)$? Yes
+
+Proof:
+
+Consider the base case $ n >= 4$:
+\begin{equation*}
+    T(n) = T(\frac{n}{4}) + T(\frac{3n}{4}) + n
+\end{equation*}
+Substitute $n lg n$
+\begin{align*}
+    T(n) =& T(\frac{n}{4}) + T(\frac{3n}{4}) + n\\
+    T(n) \le& c \frac{n}{4} \log_2{\frac{n}{4}}    + c \frac{3n}{4}\log_2{\frac{3n}{4}} + cn\\
+    \le& c \left( \frac{n}{4} \log_2{n} - \frac{n}{4} \log_2{4} \right)
+    + c \left(\frac{3n}{4} \log_2{3n} - \frac{3n}{4} \log_2{4} \right) + cn \\
+    \le& c \left( \frac{n}{4} \log_2{n} - \frac{2n}{4} \right)  + c \left( \frac{3n}{4} \log_2{3n} - \frac{3n\cdot2}{4} \right) + cn \\
+    \le& c\left(\frac{n}{4} \log_2{n} - \frac{1}{2}n\right)   + c \left(\frac{3n}{4} \log_2{3} + \frac{3n}{4} \log_2{n} - \frac{3n}{2}\right) + cn\\
+    \le& c\frac{n}{4} \log_2{n} - \frac{1}{2}cn + \frac{3nc}{4} \log_2{n} - cn
+    + cn\\
+    \le& c\frac{n}{4} \log_2{n} + \frac{3cn}{4}\log_2{n} \\
+    \le& cn\log_2{n}
+\end{align*}
+Intuitively this makes sense because we are still dividing the space into some
+log relatable ratio for each subproblem. 
+
+Consider dividing the space into $\sqrt{n}$ and $n-\sqrt{n}$. This problem will
+not remain at $n \log_2{n}$ since the division of the space is not an even
+recurrence. Instead there is a linear adjustment in the form of $n - \dots$
+\begin{align*}
+    T(n) &= T(n^{\frac{1}{2}}) + T(n-n^{\frac{1}{2}}) + nc\\
+    \le& n^{\frac{1}{2}} \log_2{n^{\frac{1}{2}}} + \left(n-
+    n^{\frac{1}{2}}\right) \log_2\left(n - n^{\frac{1}{2}}\right) c + cn
+    \dots
+\end{align*}
+Eventually we get to where we cannot resolve the logs with the roots.  So let's
+try a greater complexity: $n^2$
+\begin{align*}
+    \le& \left( n^{\frac{1}{2}} \right)^2 + \left( n - n^\frac{1}{2} \right)^2
+    + nc\\
+    \le& n + n^2 - n + nc\\
+    \le& n^2 + n(1 - 1 + 1)c\\
+    \le& n^2 + nc\\
+    \le& \lim_{n\to \infty}\left(n^2 + nc\right)\\
+    \le& cn^2
+\end{align*}
+Thus by adding an irregular division to the sub problems we increase the
+complexity to recombine those subproblems.
+\end{problem}
+
+
+
+\end{document}
