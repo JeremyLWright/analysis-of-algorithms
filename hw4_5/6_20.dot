@@ -1,0 +1,20 @@
+digraph {
+    {
+    rank=same
+    node [shape=circle]
+    1 2 3 4 5 6 7 "..." 18 19 20
+    }
+    ordering=out
+    x [style=invis]
+    x -> {1 2 3 4 5 6 7 "..." 18 19 20} [style=invis]
+    1 -> 2 [color=red]
+    2 -> 3 [color=red]
+    3 -> 4 [color=green]
+    4 -> 5 [color=green]
+    5 -> 6 [color=green]
+    6 -> 7 [color=orange]
+    7 -> "..." [color=orange]
+    "..." -> 18 [color=orange]
+    18 -> 19 [color=blue]
+    19 -> 20 [color=blue]
+}

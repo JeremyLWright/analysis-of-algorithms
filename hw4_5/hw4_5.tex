@@ -291,7 +291,7 @@ in the visible list. In this way we beat $n^2$ time.
 
 \begin{problem}{6.3}
     Given an ordered graph G, find the length of the longest path that begins at A and ends at E.
-    
+
     \includegraphics{6_3a.pdf}
 
     The given algorithm is a greedy algorithm and always chooses the nearest
@@ -346,7 +346,7 @@ in the visible list. In this way we beat $n^2$ time.
     to maximze the quality of the sentence. So lets ``carefully'' try all
     suffixes.
 
-    1. Subproblems. suffixes of works words[i:] (in python notation).\\
+    1. Subproblems. suffixes of words[i:] (in python notation).\\
         \# number of subproblems is n in the number of letters
 
     2. Guess where to start the second word.\\
@@ -355,13 +355,64 @@ in the visible list. In this way we beat $n^2$ time.
 
     3. Recurrence
         \begin{equation}
-            word(i) = max\{ word(j) + Q(i, j) \text{ for j in range(i+1,
+            word(i) = max\{ word([j:]) + Q(i, j) \text{ for j in range(i+1,
             n + 1)}\}
         \end{equation}
-    4. Total runnign time is time / subproblem * number of problems
+        At each letter, the quality of $[i:j]$ is added to the recursive call.
+        The suffix is then split at j, and recursively called. This measures the
+        quality of all $n$ suffixes of the word. Since we have overlapping
+        subproblems, if we memoize, we can ignore the cost of the recursive
+        calls and this results in $\theta(n)$ since there are $n$ letters in the
+        set of suffixes.
+
+    4. Total running time is time / subproblem * number of problems
        = $\theta(n^2)$.
 
     5. Original subproblem is the maximum quality starting from the first
        character i.e. $word(0)$. 
+\end{problem}
+\begin{problem}{6.20}
+ 
+    From the problem we can see that the function $f_i$ is a nondecreasing
+    function, thus it has a topological sort $\therefore$ we can apply dynamic
+    programming since our problem is acyclic.
+
+    The goal is then to find a collection of contagious hours to spend on each
+    class as show in the DAG below.
+
+    \includegraphics[width=\textwidth]{6_20.pdf}
+
+    It is important to note that the hours are indivisible integers, since real
+    numbers would make the dynamic program infinite. Minimally we have to divide
+    the hours into some discrete steps to draw the DAG. Without a DAG, dynamic
+    programming will not result in a correct algorithm. 
+
+    This problem is now similar to problem 6.5 such that we are finding the
+    divisions of contigious sequences. 
+
+    1. Subproblems. Suffixes of the list of hours. Each list of hours will be
+       fed to the function $f_i$ and we want to maximize our grade at each
+       point.
+
+    2. We'll start on the first hour, and try every set of hours after that.
+       This results in the number of subproblems being $\theta(n)$
+
+    3. Recurrence
+    \begin{equation}
+        hours(i) = max\{ hours([j:]) + f( (i-j) ) \text{ for j in range(i+1,
+            n + 1)}\}
+    \end{equation}
+    At each hour, we choose the hours until the end of the list, and calculate
+    the expected grade for that set of hours. We then recurse on the hours left
+    in the set. Since we have overlapping sub problems we don't have the count
+    all the recursive calls, $\therefore$ we expect the time per subproblem to
+    be $\theta(n)$.
+
+    4. Total running time is $\frac{time}{subproblem} \cdot \text{number of subproblems} = \theta(n) \cdot \theta(n) = \theta(n^2)$
+
+    5. We don't spend any extra time combining the subproblems, thus we meet
+       this with $\theta(n^2)$
+
+
 \end{problem}
 \end{document}
