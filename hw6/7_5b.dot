@@ -1,0 +1,10 @@
+
+digraph {
+    A -> B [label=2]
+    A -> C [label=2]
+    A -> D [label=2]
+    B -> C [label=10]
+    C -> D [label = 10]
+    A -> E[label=5]
+
+}

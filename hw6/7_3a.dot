@@ -1,0 +1,22 @@
+digraph {
+    {
+    rank=same
+    node [shape=circle]
+    s a c t
+    }
+    ordering=out
+    x [style=invis]
+    x -> {s a c t} [style=invis]
+    s -> a [label="8/8"]
+    s -> b [ label = "10/5", color=blue]
+    s -> d [label = "5/5"]
+    a -> c [label = "10/8"]
+    a -> b [label = "3/0"]
+    a -> d [label = "3/0"]
+    d -> t [label = "10/5"]
+    d -> c [label = "8/8"]
+    b -> c [label = "3/0", color=blue]
+    c -> t [label = "8/8", color=blue]
+    b -> t [label = "5/5", color=blue]
+
+}

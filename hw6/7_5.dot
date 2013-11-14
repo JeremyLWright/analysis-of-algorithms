@@ -1,0 +1,11 @@
+
+
+digraph {
+    A -> B [label=1]
+    A -> C [label=1]
+    A -> D [label=1]
+    B -> C [label=9]
+    C -> D [label = 9]
+    A -> E[label=4]
+
+}
