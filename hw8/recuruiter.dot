@@ -1,0 +1,6 @@
+graph {
+John -- Susan [label="golf"]
+Susan -- Sharon [label="Pie eating"]
+Susan -- Susan [label="baseball"]
+John -- Sharon [label="sumo"]
+}
